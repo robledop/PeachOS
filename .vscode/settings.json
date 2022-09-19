@@ -1,7 +1,10 @@
 {
-    "files.associations": {
-        "*.tcc": "c",
-        "algorithm": "c",
-        "fstream": "c"
-    }
+  "files.associations": {
+    "*.tcc": "c",
+    "*.h": "c",
+    "algorithm": "c",
+    "fstream": "c"
+  },
+  "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+  "cSpell.words": ["kernelfull", "kfree", "kheap", "kmalloc", "kzalloc"]
 }

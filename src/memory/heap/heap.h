@@ -7,10 +7,17 @@
 #define HEAP_BLOCK_TABLE_ENTRY_TAKEN 0x01
 #define HEAP_BLOCK_TABLE_ENTRY_FREE 0x00
 
+// Is the entry to right part of the allocation?
 #define HEAP_BLOCK_HAS_NEXT 0b10000000
+
+// Is this the first entry of the allocation?
 #define HEAP_BLOCK_IS_FIRST  0b01000000
 
-
+/*
+    layout
+    upper 4 bits are flags                   /                      lower 4 bits are the entry type
+    [HEAP_BLOCK_HAS_NEXT] [HEAP_BLOCK_IS_FIRST] [UNUSED] [UNUSED] | [HEAP_BLOCK_TABLE_ENTRY_TAKEN] OR [HEAP_BLOCK_TABLE_ENTRY_FREE]
+ */
 typedef unsigned char HEAP_BLOCK_TABLE_ENTRY;
 
 struct heap_table
@@ -18,7 +25,6 @@ struct heap_table
     HEAP_BLOCK_TABLE_ENTRY* entries;
     size_t total;
 };
-
 
 struct heap
 {

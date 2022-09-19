@@ -4,4 +4,4 @@ export TARGET=i686-elf
 export PATH="$PREFIX/bin:$PATH"
 make all
 
-qemu-system-x86_64 -hda ./bin/os.bin
+gdb -tui --command=./bin/gdbcommands

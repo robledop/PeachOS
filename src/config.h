@@ -9,7 +9,11 @@
 
 // 100MB heap size
 #define PEACHOS_HEAP_SIZE_BYTES 104857600
+
+// The minimum amount of memory that can be allocated. The memory will be allocated by increments of the block size
 #define PEACHOS_HEAP_BLOCK_SIZE 4096
+
+// The start address of the heap
 #define PEACHOS_HEAP_ADDRESS 0x01000000 
 #define PEACHOS_HEAP_TABLE_ADDRESS 0x00007E00
 
