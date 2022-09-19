@@ -4,34 +4,37 @@
 #include "status.h"
 #include "memory/memory.h"
 
+// Primary master disk
 struct disk disk;
 
 int disk_read_sector(int lba, int total, void* buf)
 {
-    outb(0x1F6, (lba >> 24) | 0xE0);
-    outb(0x1F2, total);
-    outb(0x1F3, (unsigned char)(lba & 0xff));
-    outb(0x1F4, (unsigned char)(lba >> 8));
-    outb(0x1F5, (unsigned char)(lba >> 16));
-    outb(0x1F7, 0x20);
+    // https://wiki.osdev.org/ATA_read/write_sectors
 
+    outb(ATA_LBA_UPPER_BITS_PORT, (lba >> 24) | ATA_LBA_MODE);
+    outb(ATA_NUMBER_OF_SECTORS_PORT, total);
+    outb(ATA_LBA_LOW_BITS_PORT, (unsigned char)(lba & 0xff));
+    outb(ATA_LBA_MIDDLE_BITS_PORT, (unsigned char)(lba >> 8));
+    outb(ATA_LBA_HIGH_BITS_PORT, (unsigned char)(lba >> 16));
+    outb(ATA_COMMAND_PORT, ATA_COMMAND_READ_WITH_RETRY);
+
+    // read 2 bytes at a time
     unsigned short* ptr = (unsigned short*) buf;
     for (int b = 0; b < total; b++)
     {
         // Wait for the buffer to be ready
-        char c = insb(0x1F7);
-        while(!(c & 0x08))
+        char c = insb(ATA_COMMAND_PORT);
+        while (!(c & ATA_SECTOR_BUFFER_REQUIRES_SERVICING))
         {
-            c = insb(0x1F7);
+            c = insb(ATA_COMMAND_PORT);
         }
 
         // Copy from hard disk to memory
         for (int i = 0; i < 256; i++)
         {
-            *ptr = insw(0x1F0);
+            *ptr = insw(ATA_DATA_IN_OUT_PORT);
             ptr++;
         }
-
     }
     return 0;
 }
@@ -48,7 +51,7 @@ void disk_search_and_init()
 struct disk* disk_get(int index)
 {
     if (index != 0)
-        return 0;
+        return NULL;
     
     return &disk;
 }

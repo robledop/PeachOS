@@ -51,7 +51,7 @@ struct fat_header
     uint16_t sectors_per_fat;
     uint16_t sectors_per_track;
     uint16_t number_of_heads;
-    uint32_t hidden_setors;
+    uint32_t hidden_sectors;
     uint32_t sectors_big;
 } __attribute__((packed));
 

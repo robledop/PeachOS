@@ -6,5 +6,27 @@
     "fstream": "c"
   },
   "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
-  "cSpell.words": ["kernelfull", "kfree", "kheap", "kmalloc", "kzalloc"]
+  "cSpell.words": [
+    "capslock",
+    "diskstreamer",
+    "EFSNOTUS",
+    "ERDONLY",
+    "EUNIMP",
+    "getkeyblock",
+    "idisk",
+    "insb",
+    "insw",
+    "ISERR",
+    "istrncmp",
+    "kernelfull",
+    "kfree",
+    "kheap",
+    "kmalloc",
+    "kzalloc",
+    "pathparser",
+    "ritem",
+    "sval",
+    "tonumericdigit",
+    "writechar"
+  ]
 }
