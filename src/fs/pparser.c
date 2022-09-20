@@ -11,6 +11,7 @@ static int pathparser_path_valid_format(const char* filename)
     return (len >= 3 && isdigit(filename[0]) && memcmp((void*)&filename[1], ":/", 2) == 0);
 }
 
+// gets the drive number and modifies the passed string to remove the first 3 characters from it
 static int pathparser_get_drive_by_path(const char** path)
 {
     if(!pathparser_path_valid_format(*path))
@@ -32,7 +33,6 @@ static struct path_root* pathparser_create_root(int drive_number)
     path_r->first = 0;
     return path_r;
 }
-
 
 static const char* pathparser_get_path_part(const char** path)
 {
@@ -94,9 +94,10 @@ void pathparser_free(struct path_root* root)
     kfree(root);
 }
 
+// current_directory_path is not currently used
 struct path_root* pathparser_parse(const char* path, const char* current_directory_path)
 {
-    int res = 0;
+    int result = 0;
     const char* tmp_path = path;
     struct path_root* path_root = 0;
 
@@ -105,13 +106,13 @@ struct path_root* pathparser_parse(const char* path, const char* current_directo
         goto out;
     }
 
-    res = pathparser_get_drive_by_path(&tmp_path);
-    if (res < 0)
+    result = pathparser_get_drive_by_path(&tmp_path);
+    if (result < 0)
     {
         goto out;
     }
 
-    path_root = pathparser_create_root(res);
+    path_root = pathparser_create_root(result);
     if (!path_root)
     {
         goto out;

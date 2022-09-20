@@ -112,6 +112,7 @@ bool isdigit(char c)
 {
     return c >= 48 && c <= 57;
 }
+
 int tonumericdigit(char c)
 {
     return c - 48;

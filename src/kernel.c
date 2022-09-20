@@ -163,6 +163,13 @@ void kernel_main()
     // Enable paging
     enable_paging();
 
+    // struct path_root* root_path = pathparser_parse("0:/bin/shell.exe", NULL);
+    // if (root_path)
+    // {
+    //     /* code */
+    // }
+    
+
     // Register the kernel commands
     isr80h_register_commands();
 

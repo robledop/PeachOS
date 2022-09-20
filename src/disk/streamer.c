@@ -36,12 +36,11 @@ int diskstreamer_read(struct disk_stream* stream, void* out, int total)
         total_to_read -= (offset+total_to_read) - PEACHOS_SECTOR_SIZE;
     }
 
-    int res = disk_read_block(stream->disk, sector, 1, buf);
-    if (res < 0)
+    int result = disk_read_block(stream->disk, sector, 1, buf);
+    if (result < 0)
     {
         goto out;
     }
-
    
     for (int i = 0; i < total_to_read; i++)
     {
@@ -52,10 +51,10 @@ int diskstreamer_read(struct disk_stream* stream, void* out, int total)
     stream->pos += total_to_read;
     if (overflow)
     {
-        res = diskstreamer_read(stream, out, total-total_to_read);
+        result = diskstreamer_read(stream, out, total - total_to_read);
     }
 out:
-    return res;
+    return result;
 }
 
 void diskstreamer_close(struct disk_stream* stream)
